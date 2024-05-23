@@ -2,7 +2,7 @@
 Manage your contacts effortlessly and stay updated with global COVID-19 trends, all in one app. Built with ReactJS, TailwindCSS, React Router v6, and Redux.
 
 # Live Demo : - 
-https://contact-management-app-teal.vercel.app/
+https://contact-manager24x7.netlify.app/
 
 # Features
 
@@ -56,21 +56,17 @@ For a full list of dependencies, refer to the package.json file.
 For a full list of devDependencies, refer to the package.json file.
 
 # Steps to Run the Project
+## npm install
 - Install Dependencies: First, make sure you have Node.js and npm (Node Package Manager) installed. Then, navigate to your project directory in the terminal and run: 
   
-## npm install
-
+## npm start
 - Start the Development Server: Once the dependencies are installed, you can start the development server with:
 
-## npm start
-
+## npm run build
 - Build for Production: To create a production build of your app, run:
 
-## npm run build
-
-- Run Tests: If you want to run tests, you can use:
-
 ## npm test
+- Run Tests: If you want to run tests, you can use:
 
 
 - The app should open in your default browser at http://localhost:3000/.
