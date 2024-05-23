@@ -1,4 +1,4 @@
-## Contact Management App with COVID-19 Dashboard
+# Contact Management App with COVID-19 Dashboard
 Manage your contacts effortlessly and stay updated with global COVID-19 trends, all in one app. Built with ReactJS, TailwindCSS, React Router v6, and Redux.
 
 # Live Demo : - 
