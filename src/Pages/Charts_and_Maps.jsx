@@ -16,9 +16,11 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import WorldMap from "../Components/WorldMap";
 
 const Dashboard = () => {
+  // State to store data for countries and chart
   const [countriesData, setCountriesData] = useState([]);
   const [chartData, setChartData] = useState({});
 
+  // Fetch data for countries and update state
   useEffect(() => {
     axios(
       "https://disease.sh/v3/covid-19/countries"
@@ -29,6 +31,7 @@ const Dashboard = () => {
       });
   }, []);
 
+  // Fetch data for chart and update state
   useEffect(() => {
     axios.get(
       "https://disease.sh/v3/covid-19/historical/all?lastdays=all"
@@ -51,6 +54,7 @@ const Dashboard = () => {
       setChartData(newChartData);
     });
 
+    // Register Chart.js components
     ChartJS.register(
       CategoryScale,
       LinearScale,

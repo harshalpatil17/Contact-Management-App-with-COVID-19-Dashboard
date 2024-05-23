@@ -1,153 +1,97 @@
-// reducer.js
+// Import action types
 import { ADD_CONTACT, EDIT_CONTACT, REMOVE_CONTACT } from './actionTypes';
 
-
+// Define initial state
 const initialState = {
-  contacts:
-  //  [
-  //   {
-  //   id:1,
-  //   first_name:"Person1",
-  //   last_name:"Lastname1",
-  //   mob:"9122545553",
-  //   status:"active"
-  // },{
-  //   id:2,
-  //   first_name:"Person2",
-  //   last_name:"Lastname2",
-  //   mob:"9122545553",
-  //   status:'inactive'
-  // },{
-  //   id:3,
-  //   first_name:"Person3",
-  //   last_name:"Lastname3",
-  //   mob:"9122545553",
-  //   status:'active'
-  // }
-
-// ]||
-JSON.parse(localStorage.getItem("contacts"))||[],
+  contacts: JSON.parse(localStorage.getItem("contacts")) || [],
 };
 
+// Reducer function to handle state changes based on actions
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_CONTACT: { 
+    case ADD_CONTACT: {
+      let flag = 0;
 
-
-
-
-      let flag=0
-       if(action.payload.first_name==""||action.payload.last_name==""||action.payload.mob==""){
-          alert('ohh You Missed Required Input , Please fill')
-        flag=1
+      // Check if required fields are empty
+      if (action.payload.first_name === "" || action.payload.last_name === "" || action.payload.mob === "") {
+        alert('Ohh, you missed required input. Please fill it.');
+        flag = 1;
+      } else {
+        // Check if contact already exists
+        state.contacts.forEach((el) => {
+          if (el.first_name === action.payload.first_name && el.last_name === action.payload.last_name) {
+            alert('Name already exists in contact');
+            flag = 1;
+          }
+        });
       }
-      else{
-     state.contacts.forEach((el)=>{
-        if(el.first_name==action.payload.first_name&&el.last_name==action.payload.last_name){
-            alert('Name Already Exist In Contact')
-            flag=1
-        }
-      
-      })
-      }
- 
 
-      if(!flag){
-        alert('Contact Saved Successfully!!!')
-       
-        let updatedContacts=JSON.parse(localStorage.getItem("contacts"))||[]
-        updatedContacts.push({id:state.contacts.length+1,...action.payload})
-        localStorage.setItem('contacts',JSON.stringify(updatedContacts))
-          return {
-        ...state,
-        contacts: [
-          // ...state.contacts,
-          // {
-          //   id: state.contacts.length + 1,
-          //  ...action.payload
-          // },
-        ...updatedContacts],
-      };
-    
+      // If no errors, save the contact
+      if (!flag) {
+        alert('Contact saved successfully!!!');
+        let updatedContacts = JSON.parse(localStorage.getItem("contacts")) || [];
+        updatedContacts.push({ id: state.contacts.length + 1, ...action.payload });
+        localStorage.setItem('contacts', JSON.stringify(updatedContacts));
+        
+        return {
+          ...state,
+          contacts: [...updatedContacts],
+        };
+      }
+      return state;  // Return the current state if there's an error
     }
-
-      
-      }
      
-    case REMOVE_CONTACT:{
+    case REMOVE_CONTACT: {
+      // Remove contact from localStorage and state
+      let Contacts = JSON.parse(localStorage.getItem("contacts"));
+      let updatedContacts = Contacts.filter((el) => el.id !== action.payload.id);
+      localStorage.setItem('contacts', JSON.stringify(updatedContacts));
 
-      let Contacts=JSON.parse(localStorage.getItem("contacts"))
-     let updatedContacts=Contacts.filter((el)=>el.id!=action.payload.id)
-      localStorage.setItem('contacts',JSON.stringify(updatedContacts))
-      // console.log(localStorage.getItem("contacts"))
-          return {
+      return {
         ...state,
-       
-        contacts:[...updatedContacts]
+        contacts: [...updatedContacts],
       };
-   
     }
   
     case EDIT_CONTACT: {
-
-      if(action.payload.first_name==""||action.payload.last_name==""||action.payload.mob==""){
-        alert('Input Fields Can Not Be Leave Empty')
-        // flag=1
-        return state
+      if (action.payload.first_name === "" || action.payload.last_name === "" || action.payload.mob === "") {
+        alert('Input fields cannot be left empty');
+        return state;  // Return the current state if there's an error
       }
 
-      else{
+      let flag = 0;
+      let Contacts = JSON.parse(localStorage.getItem("contacts"));
 
-      
-        let flag=0
-        let Contacts=JSON.parse(localStorage.getItem("contacts"))
-
-        Contacts.forEach((el)=>{
-          if(el.id!=action.payload.id&&el.first_name==action.payload.first_name&&el.last_name==action.payload.last_name){
-            alert("Name Already Exist!!")
-            flag=1
-            return state
-          }
-        })
-      
-        if(flag){
-          return state
+      // Check if another contact with the same name exists
+      Contacts.forEach((el) => {
+        if (el.id !== action.payload.id && el.first_name === action.payload.first_name && el.last_name === action.payload.last_name) {
+          alert("Name already exists!!");
+          flag = 1;
         }
-        else{
-           let  updatedContacts=Contacts.map((el)=>{
-          if(el.id==action.payload.id){
-            return  el={...action.payload}
-          }
-          else{
-            return el
-          }
-        })
-        localStorage.setItem("contacts",JSON.stringify(updatedContacts))
-        alert('Contact has been Updated')
-           return {
-        ...state,
-        contacts: state.contacts.map((el)=>{
-          if(el.id==action.payload.id){
-            // console.log(action.payload)
-          //  return  el={...action.payload}
+      });
 
-            return el={...action.payload}
+      if (flag) {
+        return state;  // Return the current state if there's an error
+      } else {
+        // Update contact in localStorage and state
+        let updatedContacts = Contacts.map((el) => {
+          if (el.id === action.payload.id) {
+            return { ...action.payload };
+          } else {
+            return el;
           }
-          else{
-            return el
-          }
-      
-        }),
-      };
-        }
-     
-      }
+        });
+        localStorage.setItem("contacts", JSON.stringify(updatedContacts));
+        alert('Contact has been updated');
 
-     
+        return {
+          ...state,
+          contacts: updatedContacts,
+        };
       }
+    }
       
     default:
-      return state;
+      return state;  // Return the current state for unknown action types
   }
-  
 }

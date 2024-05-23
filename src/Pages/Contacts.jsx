@@ -1,25 +1,39 @@
 
 
+// Importing necessary hooks and functions from react, react-redux and react-router-dom
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
+// Importing Popup component and removeContact action from respective files
 import Popup from "../Components/Popup";
 import { removeContact } from "../Redux/action";
 
+// Defining Contacts component
 const Contacts = () => {
+    // Using useState hook to manage state for Popup visibility and selected contact
     const [isOpen, setIsOpen] = useState(false);
     const [singleContact, setSingleContact] = useState({});
+
+    // Placeholder for data
     let data = undefined;
+
+    // Using useSelector hook to access contacts from the redux store
     const AllContacts = useSelector((store) => store.contacts);
+
+    // Using useDispatch hook to dispatch actions
     const dispatch = useDispatch();
 
+    // Function to toggle Popup visibility and set selected contact
     const togglePopup = (contact) => {
         setSingleContact(contact);
         setIsOpen(!isOpen);
     };
 
+    // Using useEffect hook to perform side effects
     useEffect(() => {}, [dispatch, AllContacts.length]);
 
+    // Rendering Contacts component
     return (
         <div className="flex flex-col items-center pt-16 text-gray-900 p-4 w-full bg-gray-100 min-h-screen">
             <div className="m-4">

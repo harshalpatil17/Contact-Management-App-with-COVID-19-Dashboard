@@ -4,15 +4,20 @@ import { useParams } from "react-router-dom";
 import { editContact } from '../Redux/action';
 
 function EditContact() {
+    // Extract the contact ID from the URL parameters
     const { id } = useParams();
     console.log(id);
 
+    // Use the useDispatch hook to get the dispatch function from Redux
     const dispatch = useDispatch();
 
+    // Access the contacts from the Redux store
     const AllContact = useSelector((store) => store.contacts);
 
+    // Initialize form state with an empty object
     const [form, setForm] = useState({});
 
+    // Handle input changes and update the form state
     const handleChange = (e) => {
         setForm({
             ...form,
@@ -20,10 +25,12 @@ function EditContact() {
         });
     };
 
+    // Handle form submission and dispatch the editContact action
     function handleSave() {
         dispatch(editContact({ id, ...form }));
     }
 
+    // Use useEffect to set the form state based on the selected contact
     useEffect(() => {
         AllContact.filter((el) => el.id == id && setForm(el));
     }, [AllContact, id]);

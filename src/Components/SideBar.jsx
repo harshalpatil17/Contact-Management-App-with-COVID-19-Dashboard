@@ -5,13 +5,18 @@ import { Link } from "react-router-dom";
 export default function Sidebar() {
     return (
         <div className="flex border-r-2 bg-gradient-to-b from-blue-50 to-blue-100">
+            {/* Sidebar container with border and gradient background */}
             <div className="flex pt-16 flex-col h-screen p-3 shadow-lg w-64">
+                {/* Sidebar content container with padding and shadow */}
                 <div className="space-y-3">
+                    {/* Top section with centered title */}
                     <div className="flex items-center justify-center">
                         <h2 className="text-2xl mt-4 font-extrabold text-gray-800">Dashboard</h2>
                     </div>
+                    {/* Navigation menu */}
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-4 text-sm">
+                            {/* Contacts link */}
                             <li className="rounded-sm">
                                 <Link
                                     to="/"
@@ -21,6 +26,7 @@ export default function Sidebar() {
                                     <span className="text-gray-700 font-semibold">Contacts</span>
                                 </Link>
                             </li>
+                            {/* Charts and Maps link */}
                             <li className="rounded-sm">
                                 <Link
                                     to="/dashboard"

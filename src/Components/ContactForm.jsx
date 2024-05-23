@@ -3,8 +3,10 @@ import { useDispatch } from "react-redux";
 import { addContact } from '../Redux/action';
 
 function ContactForm() {
+    // Use the useDispatch hook to get the dispatch function from Redux
     const dispatch = useDispatch();
 
+    // Initialize form state with default values
     const [form, setForm] = useState({
         first_name: "",
         last_name: "",
@@ -12,6 +14,7 @@ function ContactForm() {
         status: "active"
     });
 
+    // Handle input changes and update the form state
     const handleChange = (e) => {
         setForm({
             ...form,
@@ -19,6 +22,7 @@ function ContactForm() {
         });
     };
 
+    // Handle form submission and dispatch the addContact action
     function handleSave() {
         dispatch(addContact(form));
     }
